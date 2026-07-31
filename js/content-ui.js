@@ -29,7 +29,7 @@ export function updateIntroContent() {
 
 export function updatePieceContent(piece, index) {
   setAccent(piece.accent || "#85efff");
-  DOM.title.innerHTML = escapeHtml(piece.name.replace(/^El |^La /, ""));
+  DOM.title.innerHTML = escapeHtml(piece.name);
   DOM.subtitle.textContent = piece.subtitle;
   DOM.description.textContent = piece.description;
   animateContent();
