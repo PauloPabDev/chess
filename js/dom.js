@@ -2,7 +2,6 @@ export const DOM = {
   canvas: document.querySelector("#scene"),
   layout: document.querySelector("#layout"),
   content: document.querySelector("#content"),
-  chapter: document.querySelector("#chapter"),
   title: document.querySelector("#title"),
   subtitle: document.querySelector("#subtitle"),
   description: document.querySelector("#description"),

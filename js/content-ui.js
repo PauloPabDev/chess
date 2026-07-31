@@ -19,7 +19,6 @@ export function setAccent(color) {
 
 export function updateIntroContent() {
   setAccent("#85efff");
-  DOM.chapter.textContent = "Introducción";
   DOM.title.innerHTML = 'El tablero es un <span class="highlight">universo.</span>';
   DOM.subtitle.textContent = "Siete piezas. Siete formas distintas de cambiar una partida.";
   DOM.description.textContent = "Explora cómo se mueve y qué representa cada pieza de ajedrez. Al avanzar, las partículas dispersas se reunirán para revelar su forma.";
@@ -30,7 +29,6 @@ export function updateIntroContent() {
 
 export function updatePieceContent(piece, index) {
   setAccent(piece.accent || "#85efff");
-  DOM.chapter.textContent = `Pieza ${piece.number} · Ajedrez`;
   DOM.title.innerHTML = `${escapeHtml(piece.name.replace(/^El |^La /, ""))}<span class="highlight">.</span>`;
   DOM.subtitle.textContent = piece.subtitle;
   DOM.description.textContent = piece.description;
