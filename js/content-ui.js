@@ -24,6 +24,8 @@ export function updateIntroContent() {
   DOM.subtitle.textContent = "Seis piezas. Seis formas distintas de cambiar una partida.";
   DOM.description.textContent = "Explora cómo se mueve y qué representa cada pieza de ajedrez. Al avanzar, las partículas dispersas se reunirán para revelar su forma.";
   animateContent();
+  document.body.classList.remove("piece-active");
+  updateRail(-1);
 }
 
 export function updatePieceContent(piece, index) {
@@ -33,10 +35,18 @@ export function updatePieceContent(piece, index) {
   DOM.subtitle.textContent = piece.subtitle;
   DOM.description.textContent = piece.description;
   animateContent();
+  document.body.classList.add("piece-active");
 
   DOM.counter.textContent = `${piece.number} / ${String(state.pieces.length).padStart(2, "0")}`;
   DOM.progressFill.style.width = `${((index + 1) / state.pieces.length) * 100}%`;
   DOM.buttonText.textContent = index === state.pieces.length - 1 ? "Volver al inicio" : "Siguiente pieza";
+  updateRail(index);
+}
+
+export function updateRail(index) {
+  DOM.railDots.forEach(dot => {
+    dot.classList.toggle("active", Number(dot.dataset.index) === index);
+  });
 }
 
 export function updateNavigation() {

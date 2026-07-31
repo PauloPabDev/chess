@@ -18,7 +18,7 @@ html, body {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-body { min-height: 100svh; overflow: hidden; }
+body { min-height: 100svh; height: 100svh; overflow: hidden; overscroll-behavior: none; }
 button { font: inherit; }
 
 #scene {
@@ -117,8 +117,15 @@ button { font: inherit; }
 .content {
   width: min(650px, 48vw);
   align-self: center;
+  max-height: 100%;
   padding-block: 50px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  scrollbar-width: none;
 }
+
+.content::-webkit-scrollbar { display: none; }
 
 .chapter {
   display: flex;
@@ -207,7 +214,26 @@ h1 {
 .next-button:disabled { opacity: .54; cursor: wait; transform: none; }
 .next-button svg { width: 18px; height: 18px; }
 
-.keyboard-hint { color: rgba(255,255,255,.38); font-size: .76rem; }
+.scroll-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,.4);
+  font-size: .76rem;
+  transition: opacity .4s ease;
+}
+
+.scroll-hint-icon { width: 15px; height: 24px; flex: none; color: rgba(255,255,255,.5); }
+
+.scroll-hint-dot {
+  animation: scrollDot 1.9s ease-in-out infinite;
+  transform-origin: 10px 10px;
+}
+
+@keyframes scrollDot {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  55% { transform: translateY(7px); opacity: .25; }
+}
 
 .progress {
   display: flex;
@@ -245,6 +271,45 @@ h1 {
   text-align: right;
 }
 
+.rail {
+  position: fixed;
+  right: max(30px, env(safe-area-inset-right));
+  top: 50%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  transform: translateY(-50%);
+  transition: opacity .5s ease;
+}
+
+.rail-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,.22);
+  cursor: pointer;
+  transition: transform .3s cubic-bezier(.2,.8,.2,1), background .3s ease, box-shadow .3s ease;
+}
+
+.rail-dot:hover { background: rgba(255,255,255,.5); }
+.rail-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.rail-dot.active {
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  transform: scale(1.4);
+}
+
+body.gate-active .rail,
+body:not(.piece-active) .rail {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .swap {
   animation: swap .58s cubic-bezier(.2,.8,.2,1) both;
 }
@@ -253,6 +318,153 @@ h1 {
   from { opacity: .08; transform: translateY(15px); filter: blur(7px); }
   to { opacity: 1; transform: none; filter: blur(0); }
 }
+
+/* ---- Entry gate: intro + yes/no question ---- */
+
+.layout {
+  opacity: 1;
+  transition: opacity .7s ease, filter .7s ease;
+}
+
+body.gate-active .layout {
+  opacity: 0;
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(24px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+  background:
+    radial-gradient(circle at 50% 38%, rgba(133, 239, 255, .08), transparent 45%),
+    rgba(5, 6, 11, .38);
+  backdrop-filter: blur(3px);
+  transition: opacity .6s cubic-bezier(.2,.8,.2,1), filter .6s ease, transform .6s ease, visibility 0s linear 0s;
+}
+
+body.gate-dismissed .gate {
+  opacity: 0;
+  filter: blur(14px);
+  transform: scale(1.03);
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity .6s cubic-bezier(.2,.8,.2,1), filter .6s ease, transform .6s ease, visibility 0s linear .6s;
+}
+
+.gate-panel {
+  width: min(600px, 100%);
+  max-height: 88svh;
+  padding: clamp(30px, 5vw, 52px);
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: rgba(9, 11, 19, .58);
+  box-shadow: 0 40px 110px rgba(0, 0, 0, .5);
+  backdrop-filter: blur(24px);
+  text-align: left;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  scrollbar-width: none;
+}
+
+.gate-panel::-webkit-scrollbar { display: none; }
+
+.gate-panel[hidden] { display: none; }
+
+.gate-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin: 0 0 16px;
+  color: var(--accent);
+  font-size: .74rem;
+  font-weight: 760;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.gate-eyebrow::before {
+  content: "";
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.gate-title {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.05rem, 5.2vw, 3.35rem);
+  font-weight: 400;
+  line-height: .98;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+}
+
+.gate-copy {
+  max-width: 52ch;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: clamp(.95rem, 1.6vw, 1.06rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.gate-question {
+  margin: 26px 0 0;
+  color: var(--text);
+  font-size: clamp(1.08rem, 2.4vw, 1.32rem);
+  font-weight: 720;
+}
+
+.gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.gate-btn {
+  min-height: 52px;
+  padding: 0 26px;
+  border-radius: 999px;
+  font-weight: 780;
+  cursor: pointer;
+  transition: transform .2s ease, filter .2s ease, opacity .2s ease, background .2s ease;
+  touch-action: manipulation;
+}
+
+.gate-btn--yes {
+  border: 0;
+  color: #05070c;
+  background: linear-gradient(110deg, #f9feff, color-mix(in srgb, var(--accent) 74%, white), #ccbaff);
+  box-shadow: 0 14px 45px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.gate-btn--no {
+  border: 1px solid var(--line);
+  color: var(--text);
+  background: rgba(255, 255, 255, .04);
+}
+
+.gate-btn:hover { transform: translateY(-2px); filter: brightness(1.05); }
+.gate-btn:active { transform: scale(.98); }
+.gate-btn:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 38%, transparent); outline-offset: 4px; }
+.gate-btn:disabled { opacity: .5; cursor: wait; transform: none; }
+.gate-btn--no:hover { background: rgba(255, 255, 255, .08); }
+
+.gate-hint {
+  margin: 16px 0 0;
+  color: rgba(255,255,255,.38);
+  font-size: .78rem;
+}
+
+.gate-panel.swap { animation: swap .55s cubic-bezier(.2,.8,.2,1) both; }
 
 .error-message {
   position: fixed;
@@ -275,8 +487,6 @@ h1 {
 .error-message.visible { opacity: 1; transform: translate(-50%, 0); }
 
 @media (max-width: 860px) {
-  body { overflow-y: auto; }
-
   .atmosphere {
     background:
       radial-gradient(circle at 51% 70%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 28%),
@@ -285,22 +495,34 @@ h1 {
   }
 
   .layout { min-height: 100svh; padding-inline: 19px; }
-  .content { width: 100%; align-self: start; padding-top: clamp(62px, 11vh, 108px); padding-bottom: 42vh; }
-  h1 { max-width: 680px; font-size: clamp(3.25rem, 14.4vw, 6rem); }
-  .description { max-width: 570px; }
+  .content { width: 100%; align-self: center; padding-block: clamp(16px, 4svh, 40px); }
+  h1 { max-width: 680px; font-size: clamp(2.5rem, 12.5vw, 4.8rem); }
+  .description {
+    max-width: 570px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
   .footer-copy { display: none; }
   .progress-track { width: min(220px, 48vw); }
+  .rail { display: none; }
+  .gate-panel { text-align: center; }
+  .gate-eyebrow { justify-content: center; }
+  .gate-actions { justify-content: center; }
 }
 
 @media (max-width: 520px) {
   .layout { padding-inline: 17px; }
   .state { display: none; }
-  .content { padding-bottom: 39vh; }
   .next-button { width: 100%; }
-  .keyboard-hint { display: none; }
+  .scroll-hint { width: 100%; justify-content: center; }
   .footer { align-items: flex-start; }
   .progress { min-width: 0; width: 100%; }
   .progress-track { flex: 1; width: auto; }
+  .gate-panel { padding: 28px 22px; }
+  .gate-actions { flex-direction: column; }
+  .gate-btn { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

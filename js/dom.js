@@ -1,5 +1,6 @@
 export const DOM = {
   canvas: document.querySelector("#scene"),
+  layout: document.querySelector("#layout"),
   content: document.querySelector("#content"),
   chapter: document.querySelector("#chapter"),
   title: document.querySelector("#title"),
@@ -10,5 +11,14 @@ export const DOM = {
   counter: document.querySelector("#counter"),
   progressFill: document.querySelector("#progressFill"),
   state: document.querySelector("#state"),
-  error: document.querySelector("#errorMessage")
+  error: document.querySelector("#errorMessage"),
+  rail: document.querySelector("#rail"),
+  railDots: document.querySelectorAll(".rail-dot"),
+  gate: document.querySelector("#gate"),
+  gateYes: document.querySelector("#gateYes"),
+  gateNo: document.querySelector("#gateNo"),
+  gateContinue: document.querySelector("#gateContinue"),
+  gatePanelQuestion: document.querySelector("#gatePanelQuestion"),
+  gatePanelMessage: document.querySelector("#gatePanelMessage"),
+  gateHint: document.querySelector("#gateHint")
 };

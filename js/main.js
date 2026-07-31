@@ -6,10 +6,15 @@ import { renderer, scene, camera, resize, pointer, pointerTarget } from "./scene
 import { loadManifest, loadPiecePoints } from "./piece-loader.js";
 import { updateIntroContent, updatePieceContent, updateNavigation, showError } from "./content-ui.js";
 
-async function showNext() {
+async function goTo(targetIndex) {
   if (state.morph || !state.pieces.length) return;
 
-  const nextIndex = state.currentIndex + 1 >= state.pieces.length ? -1 : state.currentIndex + 1;
+  const total = state.pieces.length;
+  let nextIndex = targetIndex;
+  if (nextIndex >= total) nextIndex = -1;
+  if (nextIndex < -1) nextIndex = total - 1;
+  if (nextIndex === state.currentIndex) return;
+
   DOM.nextButton.disabled = true;
 
   try {
@@ -34,6 +39,9 @@ async function showNext() {
     DOM.state.textContent = "Error al cargar modelo";
   }
 }
+
+function showNext() { return goTo(state.currentIndex + 1); }
+function showPrev() { return goTo(state.currentIndex - 1); }
 
 function beginMorph(targetPoints, nextIndex) {
   const targetAttribute = geometry.getAttribute("aTarget");
@@ -82,10 +90,71 @@ function render(time) {
   renderer.render(scene, camera);
 }
 
-DOM.nextButton.addEventListener("click", showNext);
+// -- Simulated scroll: wheel/touch/keys only ever change which piece is
+// active. The page itself never really scrolls (see body { overflow: hidden }).
+let navLocked = false;
+
+function navigate(direction) {
+  if (document.body.classList.contains("gate-active")) return;
+  if (navLocked || state.morph) return;
+
+  navLocked = true;
+  const step = direction > 0 ? showNext() : showPrev();
+  Promise.resolve(step).finally(() => { navLocked = false; });
+}
+
+DOM.nextButton.addEventListener("click", () => navigate(1));
+
+DOM.railDots.forEach(dot => {
+  dot.addEventListener("click", () => {
+    if (document.body.classList.contains("gate-active") || navLocked || state.morph) return;
+    navLocked = true;
+    Promise.resolve(goTo(Number(dot.dataset.index))).finally(() => { navLocked = false; });
+  });
+});
 
 addEventListener("keydown", event => {
-  if (event.key === "ArrowRight" || event.key === "Enter") showNext();
+  if (["ArrowRight", "ArrowDown", "PageDown", "Enter"].includes(event.key)) navigate(1);
+  if (["ArrowLeft", "ArrowUp", "PageUp"].includes(event.key)) navigate(-1);
+});
+
+let wheelCooldown = 0;
+addEventListener("wheel", event => {
+  const now = performance.now();
+  if (now - wheelCooldown < 120) return;
+  wheelCooldown = now;
+  navigate(Math.sign(event.deltaY));
+}, { passive: true });
+
+let touchStartY = null;
+addEventListener("touchstart", event => {
+  touchStartY = event.touches[0].clientY;
+}, { passive: true });
+
+addEventListener("touchend", event => {
+  if (touchStartY === null) return;
+  const deltaY = touchStartY - event.changedTouches[0].clientY;
+  touchStartY = null;
+  if (Math.abs(deltaY) < 42) return;
+  navigate(Math.sign(deltaY));
+}, { passive: true });
+
+function dismissGate() {
+  if (document.body.classList.contains("gate-dismissed")) return;
+  document.body.classList.remove("gate-active");
+  document.body.classList.add("gate-dismissed");
+  goTo(0);
+}
+
+DOM.gateYes.addEventListener("click", dismissGate);
+DOM.gateContinue.addEventListener("click", dismissGate);
+
+DOM.gateNo.addEventListener("click", () => {
+  DOM.gatePanelQuestion.hidden = true;
+  DOM.gatePanelMessage.hidden = false;
+  DOM.gatePanelMessage.classList.remove("swap");
+  void DOM.gatePanelMessage.offsetWidth;
+  DOM.gatePanelMessage.classList.add("swap");
 });
 
 addEventListener("pointermove", event => {
@@ -108,6 +177,8 @@ async function start() {
     DOM.state.textContent = "Experiencia lista";
     DOM.nextButton.disabled = false;
     DOM.buttonText.textContent = "Conocer las piezas";
+    DOM.gateYes.disabled = false;
+    DOM.gateHint.textContent = "";
     updateNavigation();
 
     if (state.pieces[0]) window.requestIdleCallback?.(() => loadPiecePoints(state.pieces[0]).catch(() => {}));
@@ -115,6 +186,7 @@ async function start() {
     console.error(error);
     DOM.state.textContent = "No se encontró la carpeta stl";
     DOM.buttonText.textContent = "Modelos no disponibles";
+    DOM.gateHint.textContent = "No se encontraron los modelos. Ejecuta la web con un servidor local.";
     showError("No se pudo leer stl/pieces.json. Abre el proyecto con un servidor local, no directamente como archivo.");
   }
 }
