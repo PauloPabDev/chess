@@ -21,7 +21,7 @@ export function updateIntroContent() {
   setAccent("#85efff");
   DOM.chapter.textContent = "Introducción";
   DOM.title.innerHTML = 'El tablero es un <span class="highlight">universo.</span>';
-  DOM.subtitle.textContent = "Seis piezas. Seis formas distintas de cambiar una partida.";
+  DOM.subtitle.textContent = "Siete piezas. Siete formas distintas de cambiar una partida.";
   DOM.description.textContent = "Explora cómo se mueve y qué representa cada pieza de ajedrez. Al avanzar, las partículas dispersas se reunirán para revelar su forma.";
   animateContent();
   document.body.classList.remove("piece-active");

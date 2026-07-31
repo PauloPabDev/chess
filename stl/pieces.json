@@ -14,18 +14,9 @@
       "accent": "#85efff"
     },
     {
-      "id": "torre",
-      "file": "torre.stl",
-      "number": "02",
-      "name": "La torre",
-      "subtitle": "Fuerza en líneas abiertas",
-      "description": "Se desplaza cualquier cantidad de casillas en horizontal o vertical. Su verdadero poder aparece cuando las columnas y filas quedan libres.",
-      "accent": "#79d9ff"
-    },
-    {
       "id": "caballo",
       "file": "caballo.stl",
-      "number": "03",
+      "number": "02",
       "name": "El caballo",
       "subtitle": "La pieza que rompe las reglas",
       "description": "Se mueve formando una L y puede saltar sobre otras piezas. Su recorrido inesperado lo convierte en una herramienta ideal para ataques dobles y posiciones cerradas.",
@@ -34,11 +25,20 @@
     {
       "id": "alfil",
       "file": "alfil.stl",
-      "number": "04",
+      "number": "03",
       "name": "El alfil",
       "subtitle": "Precisión a través de las diagonales",
       "description": "Recorre diagonales sin límite mientras el camino esté libre. Cada alfil permanece durante toda la partida en casillas de un mismo color.",
       "accent": "#b39aff"
+    },
+    {
+      "id": "torre",
+      "file": "torre.stl",
+      "number": "04",
+      "name": "La torre",
+      "subtitle": "Fuerza en líneas abiertas",
+      "description": "Se desplaza cualquier cantidad de casillas en horizontal o vertical. Su verdadero poder aparece cuando las columnas y filas quedan libres.",
+      "accent": "#79d9ff"
     },
     {
       "id": "reina",
@@ -57,6 +57,15 @@
       "subtitle": "La pieza que define la partida",
       "description": "Solo avanza una casilla en cualquier dirección, pero toda la estrategia gira alrededor de su seguridad. La partida termina cuando ya no puede escapar del jaque mate.",
       "accent": "#f0a4ff"
+    },
+    {
+      "id": "tablero",
+      "file": "tablero.stl",
+      "number": "07",
+      "name": "El tablero",
+      "subtitle": "El universo donde todo sucede",
+      "description": "Ocho filas y ocho columnas de casillas claras y oscuras. No es solo el escenario: su geometría define cada movimiento, cada diagonal y cada final de partida.",
+      "accent": "#ffe08c"
     }
   ]
 }

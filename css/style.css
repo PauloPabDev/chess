@@ -495,15 +495,19 @@ body.gate-dismissed .gate {
   }
 
   .layout { min-height: 100svh; padding-inline: 19px; }
-  .content { width: 100%; align-self: center; padding-block: clamp(16px, 4svh, 40px); }
-  h1 { max-width: 680px; font-size: clamp(2.5rem, 12.5vw, 4.8rem); }
+  .content { width: 100%; align-self: start; padding-block: 16px 0; }
+  .chapter { margin-bottom: 10px; }
+  h1 { max-width: 680px; font-size: clamp(2.3rem, 11vw, 4.2rem); }
+  .subtitle { margin-top: 12px; }
   .description {
     max-width: 570px;
+    margin-top: 8px;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .actions { margin-top: 18px; }
   .footer-copy { display: none; }
   .progress-track { width: min(220px, 48vw); }
   .rail { display: none; }

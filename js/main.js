@@ -80,12 +80,12 @@ function render(time) {
     if (uniforms.uProgress.value >= 1) finishMorph();
   }
 
-  pointer.x += (pointerTarget.x - pointer.x) * .045;
-  pointer.y += (pointerTarget.y - pointer.y) * .045;
+  pointer.x += (pointerTarget.x - pointer.x) * .06;
+  pointer.y += (pointerTarget.y - pointer.y) * .06;
 
-  const automaticRotation = state.currentIndex === -1 ? seconds * .018 : seconds * .045;
-  particleGroup.rotation.y += ((pointer.x * .28 + automaticRotation) - particleGroup.rotation.y) * .023;
-  particleGroup.rotation.x += ((pointer.y * .14) - particleGroup.rotation.x) * .032;
+  const automaticRotation = state.currentIndex === -1 ? seconds * .026 : seconds * .07;
+  particleGroup.rotation.y += ((pointer.x * .48 + automaticRotation) - particleGroup.rotation.y) * .035;
+  particleGroup.rotation.x += ((pointer.y * .26) - particleGroup.rotation.x) * .045;
 
   renderer.render(scene, camera);
 }

@@ -35,7 +35,7 @@ export function resize() {
 
   if (width <= 860) {
     particleGroup.position.set(.05, -1.58, 0);
-    particleGroup.scale.setScalar(Math.min(.97, width / 470));
+    particleGroup.scale.setScalar(Math.min(.97, width / 470) * .9);
   } else {
     particleGroup.position.set(2.45, -.02, 0);
     particleGroup.scale.setScalar(Math.min(1.15, width / 1450 + .25));
