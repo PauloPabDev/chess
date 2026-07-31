@@ -60,7 +60,7 @@ geometry.setAttribute("aSeed", new THREE.BufferAttribute(seeds, 3));
 export const uniforms = {
   uTime: { value: 0 },
   uProgress: { value: 0 },
-  uPointSize: { value: lowPower ? 8.0 : 9.0 },
+  uPointSize: { value: lowPower ? 6.5 : 7.0 },
   uPixelRatio: { value: 1 },
   uBurst: { value: prefersReducedMotion ? 0 : 1.0 },
   uColorA: { value: new THREE.Color("#85efff") },
