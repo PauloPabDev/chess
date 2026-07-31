@@ -22,7 +22,7 @@ export const vertexShader = `
     vec3 transformed = mix(position, aTarget, p);
     transformed += randomDirection * burst * uBurst * (0.65 + aSeed.x * 0.8);
 
-    float freeMovement = 0.07 + uIntro * 0.13;
+    float freeMovement = 0.14 + uIntro * 0.2;
     transformed.x += sin(uTime * (.32 + aSeed.x * .36) + aSeed.z * 18.0) * freeMovement;
     transformed.y += cos(uTime * (.28 + aSeed.y * .31) + aSeed.x * 16.0) * freeMovement;
     transformed.z += sin(uTime * (.24 + aSeed.z * .30) + aSeed.y * 15.0) * freeMovement;

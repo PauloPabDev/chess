@@ -1,6 +1,6 @@
 import { DOM } from "./dom.js";
 import { state } from "./state.js";
-import { MORPH_DURATION } from "./config.js";
+import { MORPH_DURATION, prefersReducedMotion } from "./config.js";
 import { geometry, uniforms, particleGroup, createScatteredPoints, spatialSort } from "./particles.js";
 import { renderer, scene, camera, resize, pointer, pointerTarget } from "./scene.js";
 import { loadManifest, loadPiecePoints } from "./piece-loader.js";
@@ -83,9 +83,11 @@ function render(time) {
   pointer.x += (pointerTarget.x - pointer.x) * .06;
   pointer.y += (pointerTarget.y - pointer.y) * .06;
 
-  const automaticRotation = state.currentIndex === -1 ? seconds * .026 : seconds * .07;
+  const spinFactor = prefersReducedMotion ? 1 : 4.2;
+  const automaticRotation = (state.currentIndex === -1 ? seconds * .026 : seconds * .07) * spinFactor;
   particleGroup.rotation.y += ((pointer.x * .48 + automaticRotation) - particleGroup.rotation.y) * .035;
-  particleGroup.rotation.x += ((pointer.y * .26) - particleGroup.rotation.x) * .045;
+  particleGroup.rotation.x += ((pointer.y * .26 + Math.sin(seconds * .17) * .16 * spinFactor) - particleGroup.rotation.x) * .045;
+  particleGroup.rotation.z += ((Math.sin(seconds * .11) * .1 * spinFactor) - particleGroup.rotation.z) * .03;
 
   renderer.render(scene, camera);
 }
