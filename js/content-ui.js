@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { DOM } from "./dom.js";
 import { state } from "./state.js";
 import { uniforms } from "./particles.js";
+import { burstText } from "./text-particles.js";
 
 let errorTimer = null;
 
@@ -19,9 +20,9 @@ export function setAccent(color) {
 
 export function updateIntroContent() {
   setAccent("#85efff");
-  DOM.title.innerHTML = 'El tablero es un <span class="highlight">universo</span>';
-  DOM.subtitle.textContent = "Siete piezas. Siete formas distintas de cambiar una partida.";
-  DOM.description.textContent = "Explora cómo se mueve y qué representa cada pieza de ajedrez. Al avanzar, las partículas dispersas se reunirán para revelar su forma.";
+  burstText(DOM.title, 'El tablero es un <span class="highlight">universo</span>', 0);
+  burstText(DOM.subtitle, escapeHtml("Siete piezas. Siete formas distintas de cambiar una partida."), 1);
+  burstText(DOM.description, escapeHtml("Explora cómo se mueve y qué representa cada pieza de ajedrez. Al avanzar, las partículas dispersas se reunirán para revelar su forma."), 2);
   animateContent();
   document.body.classList.remove("piece-active");
   updateRail(-1);
@@ -29,9 +30,9 @@ export function updateIntroContent() {
 
 export function updatePieceContent(piece, index) {
   setAccent(piece.accent || "#85efff");
-  DOM.title.innerHTML = escapeHtml(piece.name);
-  DOM.subtitle.textContent = piece.subtitle;
-  DOM.description.textContent = piece.description;
+  burstText(DOM.title, escapeHtml(piece.name), 0);
+  burstText(DOM.subtitle, escapeHtml(piece.subtitle), 1);
+  burstText(DOM.description, escapeHtml(piece.description), 2);
   animateContent();
   document.body.classList.add("piece-active");
 

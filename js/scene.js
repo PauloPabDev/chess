@@ -19,9 +19,6 @@ camera.position.set(0, 0, 8.4);
 
 scene.add(particleGroup);
 
-export const pointer = { x: 0, y: 0 };
-export const pointerTarget = { x: 0, y: 0 };
-
 export function resize() {
   const width = innerWidth;
   const height = innerHeight;
@@ -34,11 +31,13 @@ export function resize() {
   camera.updateProjectionMatrix();
 
   if (width <= 860) {
-    camera.position.z = 12.5;
-    particleGroup.position.set(.05, -1.58, 0);
+    camera.position.set(0, .6, 12.5);
+    camera.rotation.set(-.08, 0, 0);
+    particleGroup.position.set(.05, -2.3, 0);
     particleGroup.scale.setScalar(Math.min(.97, width / 470) * .9);
   } else {
-    camera.position.z = 8.4;
+    camera.position.set(0, 1.5, 8.4);
+    camera.rotation.set(-.16, 0, 0);
     particleGroup.position.set(2.45, -.02, 0);
     particleGroup.scale.setScalar(Math.min(1.15, width / 1450 + .25));
   }
