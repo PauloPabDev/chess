@@ -5,6 +5,7 @@ export const DOM = {
   title: document.querySelector("#title"),
   subtitle: document.querySelector("#subtitle"),
   description: document.querySelector("#description"),
+  descriptionToggle: document.querySelector("#descriptionToggle"),
   nextButton: document.querySelector("#nextButton"),
   buttonText: document.querySelector("#buttonText"),
   counter: document.querySelector("#counter"),

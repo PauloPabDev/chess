@@ -18,11 +18,24 @@ export function setAccent(color) {
   uniforms.uColorB.value.set(color).lerp(new THREE.Color("#d6a6ff"), .58);
 }
 
+function refreshDescriptionToggle() {
+  DOM.description.classList.remove("expanded");
+  DOM.descriptionToggle.textContent = "Ver más";
+  const isTruncated = DOM.description.scrollHeight > DOM.description.clientHeight + 1;
+  DOM.descriptionToggle.hidden = !isTruncated;
+}
+
+DOM.descriptionToggle.addEventListener("click", () => {
+  const expanded = DOM.description.classList.toggle("expanded");
+  DOM.descriptionToggle.textContent = expanded ? "Ver menos" : "Ver más";
+});
+
 export function updateIntroContent() {
   setAccent("#85efff");
   burstText(DOM.title, 'El tablero es un <span class="highlight">universo</span>', 0);
   burstText(DOM.subtitle, escapeHtml("Siete piezas. Siete formas distintas de cambiar una partida."), 1);
   burstText(DOM.description, escapeHtml("Explora cómo se mueve y qué representa cada pieza de ajedrez. Al avanzar, las partículas dispersas se reunirán para revelar su forma."), 2);
+  refreshDescriptionToggle();
   animateContent();
   document.body.classList.remove("piece-active");
   updateRail(-1);
@@ -33,6 +46,7 @@ export function updatePieceContent(piece, index) {
   burstText(DOM.title, escapeHtml(piece.name), 0);
   burstText(DOM.subtitle, escapeHtml(piece.subtitle), 1);
   burstText(DOM.description, escapeHtml(piece.description), 2);
+  refreshDescriptionToggle();
   animateContent();
   document.body.classList.add("piece-active");
 

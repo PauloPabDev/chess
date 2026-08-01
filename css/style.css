@@ -180,7 +180,36 @@ h1 {
   font-size: clamp(.96rem, 1.2vw, 1.08rem);
   line-height: 1.72;
   text-wrap: pretty;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+
+.description.expanded {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+.description-toggle {
+  display: inline-flex;
+  margin: 10px 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font-size: .86rem;
+  font-weight: 700;
+  letter-spacing: .01em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: opacity .2s ease;
+}
+
+.description-toggle:hover { opacity: .78; }
+.description-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.description-toggle[hidden] { display: none; }
 
 h1,
 .subtitle,
@@ -499,10 +528,7 @@ body.gate-dismissed .gate {
   .description {
     max-width: 570px;
     margin-top: 8px;
-    display: -webkit-box;
     -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
   .actions { margin-top: 18px; }
   .footer-copy { display: none; }

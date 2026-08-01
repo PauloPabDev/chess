@@ -10,7 +10,7 @@
       "number": "01",
       "name": "El peón",
       "subtitle": "El primer paso de toda estrategia",
-      "description": "Es la pieza más numerosa del tablero. Avanza hacia adelante, captura en diagonal y, si alcanza el extremo contrario, puede transformarse en una pieza de mayor poder.",
+      "description": "El peón es la pieza más numerosa del ajedrez. Avanza una casilla hacia adelante, captura en diagonal y nunca retrocede. Aunque parece la menos importante, su función es controlar espacio, apoyar a las demás piezas y abrir oportunidades durante toda la partida.",
       "accent": "#85efff"
     },
     {
@@ -19,7 +19,7 @@
       "number": "02",
       "name": "El caballo",
       "subtitle": "La pieza que rompe las reglas",
-      "description": "Se mueve formando una L y puede saltar sobre otras piezas. Su recorrido inesperado lo convierte en una herramienta ideal para ataques dobles y posiciones cerradas.",
+      "description": "El caballo tiene un movimiento único en forma de L: dos casillas en una dirección y una perpendicular. Es la única pieza capaz de saltar sobre otras, permitiéndole alcanzar posiciones inaccesibles y crear amenazas inesperadas.",
       "accent": "#9ab8ff"
     },
     {
@@ -28,7 +28,7 @@
       "number": "03",
       "name": "El alfil",
       "subtitle": "Precisión a través de las diagonales",
-      "description": "Recorre diagonales sin límite mientras el camino esté libre. Cada alfil permanece durante toda la partida en casillas de un mismo color.",
+      "description": "El alfil se desplaza cualquier cantidad de casillas por diagonales y permanece siempre sobre el mismo color de casillas. Su gran alcance le permite controlar largas distancias y coordinar ataques junto con otras piezas del tablero.",
       "accent": "#b39aff"
     },
     {
@@ -37,7 +37,7 @@
       "number": "04",
       "name": "La torre",
       "subtitle": "Fuerza en líneas abiertas",
-      "description": "Se desplaza cualquier cantidad de casillas en horizontal o vertical. Su verdadero poder aparece cuando las columnas y filas quedan libres.",
+      "description": "La torre se mueve cualquier cantidad de casillas en líneas rectas, tanto horizontales como verticales. Destaca por controlar filas y columnas completas, defender posiciones importantes y participar en ataques decisivos, especialmente cuando el tablero comienza a despejarse.",
       "accent": "#79d9ff"
     },
     {
@@ -46,7 +46,7 @@
       "number": "05",
       "name": "La reina",
       "subtitle": "La mayor libertad de movimiento",
-      "description": "Combina el movimiento de la torre y el alfil. Su alcance la convierte en la pieza más poderosa, pero exponerla demasiado pronto también puede volverla vulnerable.",
+      "description": "La reina combina los movimientos de la torre y del alfil, pudiendo desplazarse cualquier cantidad de casillas en líneas rectas y diagonales. Gracias a esa movilidad, es considerada la pieza más poderosa para atacar, defender y controlar espacios.",
       "accent": "#d08cff"
     },
     {
@@ -55,7 +55,7 @@
       "number": "06",
       "name": "El rey",
       "subtitle": "La pieza que define la partida",
-      "description": "Solo avanza una casilla en cualquier dirección, pero toda la estrategia gira alrededor de su seguridad. La partida termina cuando ya no puede escapar del jaque mate.",
+      "description": "El rey puede moverse una sola casilla en cualquier dirección y es la pieza más importante del juego. El objetivo del ajedrez consiste en protegerlo constantemente, ya que una partida termina cuando recibe un jaque mate sin posibilidad de escapar.",
       "accent": "#f0a4ff"
     },
     {
@@ -64,7 +64,7 @@
       "number": "07",
       "name": "El tablero",
       "subtitle": "El universo donde todo sucede",
-      "description": "Ocho filas y ocho columnas de casillas claras y oscuras. No es solo el escenario: su geometría define cada movimiento, cada diagonal y cada final de partida.",
+      "description": "El tablero de ajedrez está formado por sesenta y cuatro casillas alternadas entre colores claros y oscuros, distribuidas en ocho filas y ocho columnas. Sobre él se desarrolla toda la partida, donde cada pieza ocupa una posición determinada y cada movimiento modifica el equilibrio del juego. La disposición de las piezas, el control de los espacios y la coordinación entre ellas forman la base de cualquier estrategia. Una decisión acertada puede generar ventajas importantes, mientras que un error puede cambiar completamente el desarrollo de la partida. Cada fase del juego exige analizar posibilidades, anticipar respuestas del rival y elegir el movimiento más conveniente según la situación del tablero. Por eso, la planificación y la paciencia suelen ser tan importantes como el ataque o la defensa. Al final, el objetivo del ajedrez es dar jaque mate al rey contrario, utilizando de la mejor manera posible todas las piezas y los recursos disponibles.",
       "accent": "#ffe08c"
     }
   ]
